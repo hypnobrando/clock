@@ -126,7 +126,7 @@ func (t *Time) Value() (driver.Value, error) {
 }
 
 // Scan implements the sql.Scanner interface.
-func (tm *Time) Scan(src interface{}) error {
+func (t *Time) Scan(src interface{}) error {
 	if src == nil {
 		return nil
 	}
@@ -142,7 +142,7 @@ func (tm *Time) Scan(src interface{}) error {
 		return err
 	}
 
-	*tm = *parsedTime
+	*t = *parsedTime
 
 	return nil
 }
@@ -153,20 +153,21 @@ func (t Time) MarshalJSON() ([]byte, error) {
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
-func (u *Time) UnmarshalJSON(data []byte) error {
+func (t *Time) UnmarshalJSON(data []byte) error {
 	str := string(data)
 	tt, err := ParseTime(strings.ReplaceAll(str, `"`, ""))
 	if err != nil {
 		return err
 	}
 
-	*u = *tt
+	*t = *tt
+
 	return nil
 }
 
 // dateTime is an internal method for converting the Time to
-// an arbitray time.Time.  This is used internally for computing addition
-// and substraction on Time.
+// an arbitrary time.Time.  This is used internally for computing addition
+// and subtraction on Time.
 func (t Time) dateTime() time.Time {
 	return time.Date(2000, 1, 1, t.hours, t.minutes, t.seconds, 0, time.UTC)
 }
