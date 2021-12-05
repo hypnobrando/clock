@@ -1,4 +1,4 @@
-module github.com/brandoneprice31/clock
+module github.com/hypnobrando/clock
 
 go 1.15
 
